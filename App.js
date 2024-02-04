@@ -151,7 +151,7 @@ export default function App() {
           },
           shadowOpacity: 0.8,
           shadowRadius: 3.5,
-          elevation: 7,
+          elevation: 6,
         }}
       >
         <Ionicons name="add" size={35} color="white" />
