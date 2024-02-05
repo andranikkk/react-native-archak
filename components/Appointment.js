@@ -1,8 +1,17 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Button } from "react-native";
 import styled from "styled-components/native";
 
-const Appointment = ({ user, diagnosis, active, time }) => {
+const Appointment = ({
+  user,
+  fullname,
+  avatar,
+  diagnosis,
+  active,
+  time,
+  navigation,
+  userId,
+}) => {
   return (
     <GroupItem>
       <Avatar
@@ -11,10 +20,14 @@ const Appointment = ({ user, diagnosis, active, time }) => {
         }}
       />
       <View style={{ flex: 1 }}>
-        <FullName>{user.fullname}</FullName>
+        <FullName>{user.fullname} {userId}</FullName>
         <GrayText>{diagnosis}</GrayText>
       </View>
       <GroupDate active={active}>{time}</GroupDate>
+      {/* <Button
+        title="Открыть"
+        onPress={() => navigation.navigate("Patient", { userId: user.userId })}
+      /> */}
     </GroupItem>
   );
 };
@@ -33,7 +46,7 @@ const GroupDate = styled.Text`
   width: 70px;
   height: 32px;
   text-align: center;
-  line-height: 28px;
+  line-height: 30px;
 `;
 
 const GrayText = styled.Text`
@@ -46,12 +59,6 @@ const FullName = styled.Text`
   font-size: 16px;
 `;
 
-// const GroupTitle = styled.Text`
-//   font-weight: 800;
-//   font-size: 22px;
-//   color: #000000;
-// `;
-
 const Avatar = styled.Image`
   border-radius: 50px;
   width: 40px;
@@ -63,8 +70,9 @@ const GroupItem = styled.TouchableOpacity`
   align-items: center;
   flex-direction: row;
   padding: 20px;
-  border-bottom-width: 1px;
-  border-bottom-color: #f3f3f3;
+  borderbottomwidth: 1px;
+  borderbottomcolor: rgb(220, 220, 220);
+  width: 350px;
 `;
 
 export default Appointment;
