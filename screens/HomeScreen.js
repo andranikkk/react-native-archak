@@ -1,12 +1,19 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, SectionList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  SectionList,
+  TouchableOpacity,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 
 import Appointment from "../components/Appointment";
 import SectionTitle from "../components/SectionTitle";
 
-const DATA = [
+export const DATA = [
   {
     title: "14 сентября",
     data: [
@@ -17,6 +24,7 @@ const DATA = [
         diagnosis: "пульпит",
         user: {
           fullname: "Анжела Матиева",
+          phone: "(+995) 541-48-13-97",
           avatar:
             "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg",
         },
@@ -24,10 +32,11 @@ const DATA = [
       {
         active: false,
         userId: 2,
-        time: "15:30",
-        diagnosis: "пульпит",
+        time: "12:00",
+        diagnosis: "Удаление зуба",
         user: {
-          fullname: "Анжела Матиева",
+          fullname: "Вася Пупкин",
+          phone: "(+995) 597-78-45-89",
           avatar:
             "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg",
         },
@@ -152,29 +161,26 @@ const DATA = [
 ];
 
 const HomeScreen = ({ navigation }) => {
+  const handleUserClick = (userId) => {
+    navigation.navigate("Patient", { userId });
+  };
+
   return (
     <Container>
       <SectionList
         sections={DATA}
         keyExtractor={(item, index) => index}
         renderItem={({ item }) => (
-          <OneButton>
-            <Appointment
-              active={item.active}
-              time={item.time}
-              userId={item.userId}
-              diagnosis={item.diagnosis}
-              user={item.user}
-              // avatar={item.user.avatar}
-            />
-            {/* {...item}  */}
-            <Button
-              title="Открыть подписчикa"
-              onPress={() =>
-                navigation.navigate("Patient", { userId: item.userId })
-              }
-            />
-          </OneButton>
+          <Appointment
+            onPlus={(userId) => handleUserClick(userId)}
+            {...item}
+            // active={item.active}
+            // time={item.time}
+            // userId={item.userId}
+            // diagnosis={item.diagnosis}
+            // user={item.user}
+            // avatar={item.user.avatar}
+          />
         )}
         renderSectionHeader={({ section: { title } }) => (
           <SectionTitle> {title} </SectionTitle>
@@ -213,11 +219,6 @@ const PlusButton = styled.TouchableOpacity`
 const Container = styled.View`
   flex: 1;
   margin-top: 5px;
-`;
-
-const OneButton = styled.View`
-  display: flex;
-  flex-direction: row;
 `;
 
 export default HomeScreen;
