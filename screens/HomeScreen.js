@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   StyleSheet,
   Text,
@@ -13,179 +14,44 @@ import styled from "styled-components/native";
 import Appointment from "../components/Appointment";
 import SectionTitle from "../components/SectionTitle";
 
-export const DATA = [
-  {
-    title: "14 сентября",
-    data: [
-      {
-        active: true,
-        userId: 1,
-        time: "15:30",
-        diagnosis: "пульпит",
-        user: {
-          fullname: "Анжела Матиева",
-          phone: "(+995) 541-48-13-97",
-          avatar:
-            "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg",
-        },
-      },
-      {
-        active: false,
-        userId: 2,
-        time: "12:00",
-        diagnosis: "Удаление зуба",
-        user: {
-          fullname: "Вася Пупкин",
-          phone: "(+995) 597-78-45-89",
-          avatar:
-            "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg",
-        },
-      },
-      {
-        active: false,
-        userId: 3,
-        time: "15:30",
-        diagnosis: "пульпит",
-        user: {
-          fullname: "Анжела Матиева",
-          avatar:
-            "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg",
-        },
-      },
-      {
-        active: false,
-        userId: 4,
-        time: "15:30",
-        diagnosis: "пульпит",
-        user: {
-          fullname: "Анжела Матиева",
-          avatar:
-            "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg",
-        },
-      },
-      {
-        active: false,
-        time: "15:30",
-        userId: 5,
-        diagnosis: "пульпит",
-        user: {
-          fullname: "Анжела Матиева",
-          avatar:
-            "https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg",
-        },
-      },
-    ],
-  },
-  {
-    title: "16 сентября",
-    data: [
-      {
-        active: false,
-        time: "15:30",
-        userId: 6,
-        diagnosis: "пульпит",
-        user: {
-          fullname: "Анжела Матиева",
-          avatar:
-            "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png",
-        },
-      },
-      {
-        active: false,
-        time: "15:30",
-        userId: 7,
-        diagnosis: "пульпит",
-        user: {
-          fullname: "Анжела Матиева",
-          avatar:
-            "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png",
-        },
-      },
-      {
-        active: false,
-        time: "15:30",
-        userId: 8,
-        diagnosis: "пульпит",
-        user: {
-          fullname: "Анжела Матиева",
-          avatar:
-            "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png",
-        },
-      },
-      {
-        active: false,
-        time: "15:30",
-        userId: 9,
-        diagnosis: "пульпит",
-        user: {
-          fullname: "Анжела Матиева",
-          avatar:
-            "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png",
-        },
-      },
-      {
-        active: false,
-        time: "15:30",
-        userId: 10,
-        diagnosis: "пульпит",
-        user: {
-          fullname: "Анжела Матиева",
-          avatar:
-            "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png",
-        },
-      },
-      {
-        active: false,
-        time: "15:30",
-        userId: 11,
-        diagnosis: "пульпит",
-        user: {
-          fullname: "Анжела Матиева",
-          avatar:
-            "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png",
-        },
-      },
-      {
-        active: false,
-        time: "15:30",
-        userId: 12,
-        diagnosis: "пульпит",
-        user: {
-          fullname: "Анжела Матиева",
-          avatar:
-            "https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png",
-        },
-      },
-    ],
-  },
-];
 
 const HomeScreen = ({ navigation }) => {
-  const handleUserClick = (userId) => {
-    navigation.navigate("Patient", { userId });
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    axios.get("https://trycode.pw/c/9CJ31.json").then(({ data }) => {
+      console.log(data);
+      setData(data);
+    });
+  }, []);
+
+  const handleUserClick = (user_id) => {
+    navigation.navigate("Patient", { user_id });
   };
 
   return (
     <Container>
-      <SectionList
-        sections={DATA}
-        keyExtractor={(item, index) => index}
-        renderItem={({ item }) => (
-          <Appointment
-            onPlus={(userId) => handleUserClick(userId)}
-            {...item}
-            // active={item.active}
-            // time={item.time}
-            // userId={item.userId}
-            // diagnosis={item.diagnosis}
-            // user={item.user}
-            // avatar={item.user.avatar}
-          />
-        )}
-        renderSectionHeader={({ section: { title } }) => (
-          <SectionTitle> {title} </SectionTitle>
-        )}
-      />
+      {data && (
+        <SectionList
+          sections={data}
+          keyExtractor={(item, index) => index}
+          renderItem={({ item }) => (
+            <Appointment
+              onPlus={(user_id) => handleUserClick(user_id)}
+              {...item}
+              // active={item.active}
+              // time={item.time}
+              // user_id={item.user_id}
+              // diagnosis={item.diagnosis}
+              // user={item.user}
+              // avatar={item.user.avatar}
+            />
+          )}
+          renderSectionHeader={({ section: { title } }) => (
+            <SectionTitle> {title} </SectionTitle>
+          )}
+        />
+      )}
       <PlusButton
         style={{
           shadowColor: "#006eff",

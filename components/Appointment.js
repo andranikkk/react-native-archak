@@ -11,11 +11,11 @@ const Appointment = ({
   diagnosis,
   active,
   time,
-  userId,
+  user_id,
   onPlus,
 }) => {
   const handleUserClick = () => {
-    onPlus(userId);
+    onPlus(user_id);
   };
 
   return (
@@ -40,18 +40,6 @@ Appointment.defaultProps = {
   title: "Unknown",
   items: [],
 };
-
-// const GroupDate = styled.Text`
-//   background: ${(props) => (props.active ? "#2A86FF" : "#E9F5FF")};
-//   color: ${(props) => (props.active ? "#fff" : "#4294ff")};
-//   border-radius: 18px;
-//   font-weight: 600;
-//   font-size: 14px;
-//   width: 70px;
-//   height: 32px;
-//   text-align: center;
-//   line-height: 30px;
-// `;
 
 const FullName = styled.Text`
   font-weight: 600;

@@ -6,18 +6,20 @@ import {
   Feather,
   MaterialCommunityIcons,
   MaterialIcons,
+  Fontisto,
 } from "@expo/vector-icons";
 
 import { GrayText } from "../components/GrayText";
 import CustomButton from "../components/CustomButton";
 
 import { DATA } from "./HomeScreen";
+import { Badge } from "../components/Badge";
 
 const PatientScreen = ({ route }) => {
-  const { userId } = route.params;
+  const { user_id } = route.params;
 
   const user = DATA.flatMap((section) => section.data).find(
-    (user) => user.userId === userId
+    (user) => user.user_id === user_id
   );
 
   return (
@@ -54,6 +56,9 @@ const PatientScreen = ({ route }) => {
       <PatientAppointments>
         <Container>
           <AppointmentCard>
+            <MoreButton>
+              <Fontisto name="more-v-a" size={24} color="gray" />
+            </MoreButton>
             <AppointmentCardRow>
               <MaterialCommunityIcons name="tooth" size={24} color="gray" />
               <AppointmentCardLabel>
@@ -63,8 +68,19 @@ const PatientScreen = ({ route }) => {
             <AppointmentCardRow>
               <MaterialIcons name="event-note" size={24} color="gray" />
               <AppointmentCardLabel>
-                Диагноз: <Text style={{ fontWeight: "600" }}>{ user.diagnosis }</Text>
+                Диагноз:{" "}
+                <Text style={{ fontWeight: "600" }}>{user.diagnosis}</Text>
               </AppointmentCardLabel>
+            </AppointmentCardRow>
+            <AppointmentCardRow
+              style={{ marginTop: 15, justifyContent: "space-between" }}
+            >
+              <Badge style={{ width: 165 }} active>
+                11.10.2019 - 15:40
+              </Badge>
+              <Badge style={{ width: 85 }} color="green">
+                1500 руб.
+              </Badge>
             </AppointmentCardRow>
           </AppointmentCard>
         </Container>
@@ -72,6 +88,17 @@ const PatientScreen = ({ route }) => {
     </View>
   );
 };
+
+const MoreButton = styled.TouchableOpacity`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position="absolute";
+  right: 10px;
+  top: 10px;
+  width: 32px;
+  height: 32px;
+`;
 
 const AppointmentCardRow = styled.View`
   flex-direction: row;
