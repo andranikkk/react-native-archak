@@ -12,13 +12,12 @@ import {
 import { GrayText } from "../components/GrayText";
 import CustomButton from "../components/CustomButton";
 
-import { DATA } from "./HomeScreen";
 import { Badge } from "../components/Badge";
 
 const PatientScreen = ({ route }) => {
-  const { user_id } = route.params;
+  const { user_id, myData } = route.params;
 
-  const user = DATA.flatMap((section) => section.data).find(
+  const user = myData.flatMap((section) => section.data).find(
     (user) => user.user_id === user_id
   );
 
@@ -56,9 +55,9 @@ const PatientScreen = ({ route }) => {
       <PatientAppointments>
         <Container>
           <AppointmentCard>
-            <MoreButton>
+            {/* <MoreButton>
               <Fontisto name="more-v-a" size={24} color="gray" />
-            </MoreButton>
+            </MoreButton> */}
             <AppointmentCardRow>
               <MaterialCommunityIcons name="tooth" size={24} color="gray" />
               <AppointmentCardLabel>

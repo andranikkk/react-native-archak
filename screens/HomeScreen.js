@@ -14,39 +14,39 @@ import styled from "styled-components/native";
 import Appointment from "../components/Appointment";
 import SectionTitle from "../components/SectionTitle";
 
-
 const HomeScreen = ({ navigation }) => {
-  const [data, setData] = useState(null);
+  const [myData, setMyData] = useState(null);
 
   useEffect(() => {
-    axios.get("https://trycode.pw/c/9CJ31.json").then(({ data }) => {
-      console.log(data);
-      setData(data);
+    axios.get("https://trycode.pw/c/G8FID.json").then(({ data }) => {
+      setMyData(data);
     });
   }, []);
 
   const handleUserClick = (user_id) => {
-    navigation.navigate("Patient", { user_id });
+    navigation.navigate("Patient", { user_id, myData });
   };
 
   return (
     <Container>
-      {data && (
+      {myData && (
         <SectionList
-          sections={data}
+          sections={myData}
           keyExtractor={(item, index) => index}
-          renderItem={({ item }) => (
-            <Appointment
-              onPlus={(user_id) => handleUserClick(user_id)}
-              {...item}
-              // active={item.active}
-              // time={item.time}
-              // user_id={item.user_id}
-              // diagnosis={item.diagnosis}
-              // user={item.user}
-              // avatar={item.user.avatar}
-            />
-          )}
+          renderItem={({ item }) => {
+            return (
+              <Appointment
+                onPlus={(user_id) => handleUserClick(user_id, myData.data)}
+                {...item}
+                // active={item.active}
+                // time={item.time}
+                // user_id={item.user_id}
+                // diagnosis={item.diagnosis}
+                // user={item.user}
+                // avatar={item.user.avatar}
+              />
+            );
+          }}
           renderSectionHeader={({ section: { title } }) => (
             <SectionTitle> {title} </SectionTitle>
           )}
