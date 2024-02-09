@@ -9,7 +9,7 @@ const Appointment = ({
   fullname,
   avatar,
   diagnosis,
-  active,
+  is_active,
   time,
   user_id,
   onPlus,
@@ -30,7 +30,7 @@ const Appointment = ({
           <FullName>{user.fullname}</FullName>
           <GrayText>{diagnosis}</GrayText>
         </View>
-        <Badge active={active}>{time}</Badge>
+        <Badge active={is_active}>{time}</Badge>
       </OpacityButton>
     </GroupItem>
   );

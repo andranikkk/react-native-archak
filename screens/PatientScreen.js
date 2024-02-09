@@ -67,18 +67,18 @@ const PatientScreen = ({ route }) => {
             <AppointmentCardRow>
               <MaterialIcons name="event-note" size={24} color="gray" />
               <AppointmentCardLabel>
-                Диагноз:{" "}
-                <Text style={{ fontWeight: "600" }}>{user.diagnosis}</Text>
+                Диагноз:
+                <Text style={{ fontWeight: "600" }}> {user.diagnosis}</Text>
               </AppointmentCardLabel>
             </AppointmentCardRow>
             <AppointmentCardRow
               style={{ marginTop: 15, justifyContent: "space-between" }}
             >
-              <Badge style={{ width: 165 }} active>
-                11.10.2019 - 15:40
+              <Badge style={{ width: 185 }} active>
+                {user.date}
               </Badge>
               <Badge style={{ width: 85 }} color="green">
-                1500 руб.
+                {user.balance} руб.
               </Badge>
             </AppointmentCardRow>
           </AppointmentCard>
